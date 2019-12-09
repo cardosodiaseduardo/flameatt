@@ -166,7 +166,7 @@
                       <td style="width: 20px">
                         <v-row justify="center" align="center">
                           <button>
-                            <v-icon style="align: center" @click="editarProjeto(projeto)">{{ projeto.icon1 }}</v-icon>
+                            <v-icon style="align: center" @click="buscarTodosOsDadosDoProjetoSelecionado(projeto)">{{ projeto.icon1 }}</v-icon>
                           </button>
                         </v-row>
                       </td>
@@ -183,15 +183,6 @@
               </v-simple-table>
             </v-card-text>
           </v-card>
-
-          <!-- <div class="text-center ma-2" widht="400" height="50">
-            <v-snackbar v-if="snackbar">
-              Projeto deletado com sucesso!
-              <v-btn color="pink" text @click="snackbar = false">
-                Fechar
-              </v-btn>
-            </v-snackbar>
-          </div> -->
 
           <v-row justify="center">
             <v-btn color="error" class="ml-4" @click="e1 = 1">
@@ -230,11 +221,11 @@
                 <v-expansion-panel style="width: 100%">
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Pessoa Física</v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.nome" label="Nome" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.email" label="E-mail" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.cpf" label="CPF" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.telefonePessoal" label="Telefone celular" required></v-text-field>
+                    <v-form ref="form">
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.nome" label="Nome" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.email" label="E-mail" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.cpf" label="CPF" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.telefonePessoal" label="Telefone celular" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -243,14 +234,14 @@
                 <v-expansion-panel style="width: 100%">
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Pessoa Jurídica</v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.cnpj" :rules="nameRules" label="CNPJ" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.razaoSocial" :rules="nameRules" label="Razão Social" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.nomeFantasia" :rules="emailRules" label="Nome Fantasia" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.emailInstitucional" :rules="emailRules" label="E-mail da Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.telefoneEmpresa" :rules="cpfRules" label="Telefone da Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.nomeResponsavel" :rules="cpfRules" label="Nome Completo do Responsável pela Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.cpfResponsavel" :rules="cpfRules"  label="CPF do Responsável pela Empresa" required></v-text-field>
+                    <v-form ref="form">
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.cnpj" label="CNPJ" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.razaoSocial" label="Razão Social" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeFantasia" label="Nome Fantasia" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.emailInstitucional" label="E-mail da Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.telefoneEmpresa" label="Telefone da Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeResponsavel" label="Nome Completo do Responsável pela Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.cpfResponsavel" label="CPF do Responsável pela Empresa" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -265,13 +256,13 @@
                 <v-expansion-panel style="width: 100%">
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Endereço</v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.cep" :rules="nameRules" label="CEP" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.rua" :rules="emailRules" label="Rua" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.numero" :rules="cpfRules" label="Número" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.bairro" :rules="cpfRules" label="Bairro" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.municipio" :rules="cpfRules" label="Município" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.estado" :rules="cpfRules" label="Estado" required></v-text-field>
+                    <v-form ref="form">
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.cep" label="CEP" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.rua" label="Rua" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.numero" label="Número" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.bairro" label="Bairro" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.municipio" label="Município" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.estado" label="Estado" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -281,19 +272,19 @@
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Dados da Edificação</v-expansion-panel-header>
 
                   <v-expansion-panel-content>
-                    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.areaDoTerreno" :rules="nameRules" label="Área do terreno (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.areaConstruida" :rules="nameRules" label="Área construída (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.areaAnalisada" :rules="emailRules" label="Área a ser analisada (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.alturaDescendente" :rules="emailRules" label="Altura descendente (Entre Pisos, em m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.alturaEdificacao" :rules="cpfRules" label="Altura total da edificação (m)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.numeroPavimentos" :rules="cpfRules" label="Número de pavimentos" required></v-text-field>
+                    <v-form ref="form">
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaDoTerreno" label="Área do terreno (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaConstruida" label="Área construída (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaAnalisada" label="Área a ser analisada (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaDescendente" label="Altura descendente (Entre Pisos, em m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaEdificacao" label="Altura total da edificação (m)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.numeroPavimentos" label="Número de pavimentos" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
 
-              <v-btn color="success" class="ma-4" @click="reset">Salvar Dados</v-btn>
+              <v-btn color="success" class="ma-4">Salvar Dados</v-btn>
             </v-card-text>
           </v-card>
 
@@ -320,29 +311,27 @@
             <v-btn outlined text class="mr-4" @click="ativar(); e1 = 2">◄ Editar outro projeto</v-btn>
           </v-row>
 
-            <div class="text-start">
-              <v-dialog v-model="dialog" width="500">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="success" class="mb-4" v-on="on">
-                    Adicionar Edificação →
-                  </v-btn>
-                </template>
-                <v-card class="pt-4" height="350">
-                  <v-card-text>
-                    <v-text-field label="Nome" placeholder="Ex.: Lounge"></v-text-field>
-                    <v-text-field label="Área Total (em m²)" placeholder="Ex.: 55"></v-text-field>
-                    <v-text-field label="Ambientes" placeholder="Ex.: Bar Gourmet - 10m²"></v-text-field>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-row justify="center">
-                      <v-btn outlined color="success" @click="addEdificacao()">
-                        Salvar
-                      </v-btn>
-                    </v-row>
-                  </v-card-actions>                
-                </v-card>
-              </v-dialog>
-            </div>
+            <v-btn color="success" class="mb-4" @click="caixaDeExpansaoDoAddEdificacao = !caixaDeExpansaoDoAddEdificacao">
+              Adicionar Edificação →
+            </v-btn>
+            <v-card v-if="caixaDeExpansaoDoAddEdificacao" class="pb-4" height="100%">
+              <v-card-text>
+                <v-text-field label="Nome" placeholder="Ex.: Lounge"></v-text-field>
+                <v-text-field label="Área Total (em m²)" placeholder="Ex.: 55"></v-text-field>
+                <div v-for="item in novaEdificacao.edificacao" v-bind:key="item.nome">
+                  <v-text-field label="Ambientes" placeholder="Ex.: Bar Gourmet - 10m²" v-model="item.ambientes"></v-text-field>
+                </div>
+                <div class="mb-4">
+                  <v-btn small text color="success" @click="addNovoAmbiente">+ 1 ambiente</v-btn>
+                </div>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions class="mt-4">
+                <v-btn outlined color="success" @click="noQuadroDeAreasAddEdificacao()">
+                  Salvar
+                </v-btn>
+              </v-card-actions>                
+            </v-card>
 
             <v-card class="mb-12" style="width: 100%">
               <v-card class="mb-0" width="100%" height="30px" color="blue">
@@ -357,7 +346,7 @@
                     <tbody>
                       <tr>
                         <v-expansion-panels>
-                          <v-expansion-panel v-for="item in projetoSelecionadoParaEdicao" v-bind:key="item.nome">
+                          <v-expansion-panel v-for="item in projetoSelecionadoParaEdicao.quadroDeAreas" v-bind:key="item.nome">
                             <v-expansion-panel-header> <h3> {{ item.nome }} </h3> </v-expansion-panel-header>
                             <v-expansion-panel-content>
                               <h5>Área Total</h5>
@@ -412,8 +401,10 @@
               <v-card-title style="color: black" class="ml-1 pa-4">Descrição</v-card-title>
 
               <v-card-text>
-                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                  <v-text-field v-model="name" style="background-color: darkgrey; padding-left: 10px; padding-right: 10px; height: 50px" :rules="nameRules" label="Descrição" required></v-text-field>
+                <v-form ref="form">
+                  <div>
+                    <v-autocomplete filled rounded chips label="Escolha o CNAE da atividade principal que será desenvolvida no local" clearable hide-details hide-selected :items="cnaes" item-text="item.idDoCnae" item-value="item.observacoesDoCnae" :placeholder="this.cnaes.descricao" solo></v-autocomplete>
+                  </div>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -422,10 +413,10 @@
             <v-card style="width: 100%">
               <v-card-title style="color: black" class="ml-1 pa-4">Ocupação</v-card-title>
               <v-card-text>
-                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                  <v-text-field class="paddingFoward" v-model="cnpj" :rules="nameRules" label="Ocupação" required placeholder="Ex.: Residencial"></v-text-field>
-                  <v-text-field class="paddingFoward mt-5" v-model="razaoSocial" :rules="nameRules" label="Grupo" required placeholder="Ex.: A"></v-text-field>
-                  <v-text-field class="paddingFoward mt-5" v-model="nomeFantasia" :rules="emailRules" label="Divisão" required placeholder="Ex.: A-3"></v-text-field>
+                <v-form ref="form">
+                  <v-text-field class="paddingFoward" label="Ocupação" required placeholder="Ex.: Residencial"></v-text-field>
+                  <v-text-field class="paddingFoward mt-5" label="Grupo" required placeholder="Ex.: A"></v-text-field>
+                  <v-text-field class="paddingFoward mt-5" label="Divisão" required placeholder="Ex.: A-3"></v-text-field>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -440,10 +431,10 @@
             <v-card style="width: 100%">
               <v-card-title style="color: black" class="ml-1 pa-4">Especificações</v-card-title>
               <v-card-text>
-                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                  <v-text-field class="paddingFoward" v-model="cnpj" :rules="nameRules" label="Altura da Edificação" placeholder="Ex.: 6,00 m" required></v-text-field>
-                  <v-text-field class="paddingFoward mt-5" v-model="cnpj" :rules="nameRules" label="Denominação" placeholder="Ex.: BAIXA" required></v-text-field>
-                  <v-text-field class="paddingFoward mt-5" v-model="cnpj" :rules="nameRules" label="Tipo" placeholder="Ex.: 2" required></v-text-field>
+                <v-form ref="form">
+                  <v-text-field class="paddingFoward" label="Altura da Edificação" placeholder="Ex.: 6,00 m" required></v-text-field>
+                  <v-text-field class="paddingFoward mt-5" label="Denominação" placeholder="Ex.: BAIXA" required></v-text-field>
+                  <v-text-field class="paddingFoward mt-5" label="Tipo" placeholder="Ex.: 2" required></v-text-field>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -458,9 +449,9 @@
             <v-card style="width: 100%">
               <v-card-title style="color: black" class="ml-1 pa-4">Especificações</v-card-title>
               <v-card-text>
-                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                  <v-text-field class="paddingFoward" v-model="cnpj" :rules="nameRules" label="Carga de Incêndio" placeholder="Ex.: 500" required></v-text-field>
-                  <v-text-field class="paddingFoward mt-5" v-model="cnpj" :rules="nameRules" label="Risco" placeholder="Ex.: MÉDIO" required></v-text-field>
+                <v-form ref="form">
+                  <v-text-field class="paddingFoward" label="Carga de Incêndio" placeholder="Ex.: 500" required></v-text-field>
+                  <v-text-field class="paddingFoward mt-5" label="Risco" placeholder="Ex.: MÉDIO" required></v-text-field>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -480,41 +471,50 @@
 
 <script>
 import HTTPutils from "@/Utils/HTTPutils";
+import HTTPcnaeConexion from "@/Utils/HTTPcnaeConexion";
 
 export default {
   data: () => ({
     // Dados Globais
     showProjetoSelecionado: false,
     e1: 0,
+    
     projetoSelecionadoParaEdicao: {
-      nome: "Eduardo Aparecido Dias Cardoso",
-      email: "cardosodiaseduardo@gmail.com",
-      cpf: "044.406.671-39",
-      telefonePessoal: "(67)991704717",
+      pessoaFisica: {
+        "nome": "Eduardo Aparecido Dias Cardoso",
+        "email": "cardosodiaseduardo@gmail.com",
+        "cpf": "044.406.671-39",
+        "telefonePessoal": "(67)991704717",
+      },
+      
+      pessoaJuridica: {
+        "razaoSocial": "Castro Construtora e Engenharia - ME",
+        "nomeFantasia": "CCE Construtora e Engenharia",
+        "emailInstitucional": "ccedson@gmail.com",
+        "telefoneEmpresa": "(67)3321-1014",
+        "nomeResponsavel": "Edson Fernandes de Castro",
+        "cpfResponsavel": "044.406.671-39",
+      },
 
-      razaoSocial: "Castro Construtora e Engenharia - ME",
-      nomeFantasia: "CCE Construtora e Engenharia",
-      emailInstitucional: "ccedson@gmail.com",
-      telefoneEmpresa: "(67)3321-1014",
-      nomeResponsavel: "Edson Fernandes de Castro",
-      cpfResponsavel: "044.406.671-39",
+      edificacao: {
+        "cep": "79.037-910",
+        "rua": "Av. Afonso Pena",
+        "numero": "2297",
+        "bairro": "Centro",
+        "municipio": "Campo Grande",
+        "estado": "MS",
+      },
 
-      cep: "79.037-910",
-      rua: "Av. Afonso Pena",
-      numero: "2297",
-      bairro: "Centro",
-      municipio: "Campo Grande",
-      estado: "MS",
-
-      areaDoTerreno: "350m²",
-      areaConstruida: "250m²",
-      areaAnalisada: "100m²",
-      alturaDescendente: "2 metros",
-      alturaEdificacao: "4 metros",
-      numeroPavimentos: "4",
+      dadosDaEdificacao: {
+        "areaDoTerreno": "350m²",
+        "areaConstruida": "250m²",
+        "areaAnalisada": "100m²",
+        "alturaDescendente": "2 metros",
+        "alturaEdificacao": "4 metros",
+        "numeroPavimentos": "4",
+      },
     
       quadroDeAreas: {
-
         "edificacao1": {
           "nome": "Escritório",
           "area": "25m²",
@@ -524,7 +524,6 @@ export default {
             "Ambiente 3": "Escritório - Área de 10m²"
           }
         },
-
         "edificacao2": {
           "nome": "Auditório",
           "area": "50m²",
@@ -533,32 +532,44 @@ export default {
             "Ambiente 2": "Auditório - Área de 45m²"
           }
         }
-
+      
       }
 
     },
 
     alertaProjetoNaoSalvo: false,
     msgErroSalvandoProjeto: "",
-    // Dados da Tab2
+    // Adicionando novo projeto na tab da listagem dos projetos
     novoProjetoDialog: false,
     novoProjetoNome: "",
     novoProjetoDescricao: "",
     projetoSelecionado: false,
-
     projetos: [],
 
-    snackbar: false,
-
+    //Adicionando nova edificação na tab das listagens de edificações
     edificacoes: [],
+    novaEdificacao: {
+      "edificacao": {
+        "nome": "Estudio",
+        "area": "25m²",
+        "ambientes": {
+          "Ambiente 1": "Estudio de gravação - 20m²",
+          "Ambiente 2": "Banheiro - Área de 5m²",
+        }
+      }
+    },
 
-    dialog: false
+    dialog: false,
+    caixaDeExpansaoDoAddEdificacao: false,
+
+    //Array para integração com API do IBGE dos CNAEs
+    cnaes: []
 
   }),
 
   mounted() {
     this.buscarProjetosDoUsuarioPeloId();
-    this.buscarEdificacoesDoProjetoSelecionado();
+    this.trazerDadosDosCnaes();
   },
 
   methods: {
@@ -629,11 +640,6 @@ export default {
       }
     },
 
-    editarProjeto(projetoAserEditado){
-      this.ativar();
-      this.projetoSelecionadoParaEdicao = projetoAserEditado
-    },
-
     removerProjeto(projetoAserRemovido){
       HTTPutils.removerProjeto(projetoAserRemovido)
         .then( resultado => {
@@ -651,7 +657,7 @@ export default {
         })
     },
 
-    addEdificacao(){
+    noQuadroDeAreasAddEdificacao(){
       let novaEdificacao = {
         "nome": "Lounge",
         "area": "Área de 30m²",
@@ -665,8 +671,31 @@ export default {
       this.dialog = false
     },
 
-    buscarTodosOsDadosDoProjetoSelecionado(){
+    buscarTodosOsDadosDoProjetoSelecionado(projetoAserEditado){
+      this.ativar();
+      // this.projetoSelecionadoParaEdicao = projetoAserEditado
+    },
 
+    trazerDadosDosCnaes(){
+
+      HTTPcnaeConexion.buscarCnaes()
+        .then( resultado => {
+          
+          for(let i = 0; i < resultado.length; i++){
+            let idDoCnae = JSON.stringify(resultado[i].id)
+            let descricaoDoCnae = JSON.stringify(resultado[i].grupo.divisao.secao.descricao)
+            let observacoesDoCnae = JSON.stringify(resultado[i].observacoes)
+            const objetoDoCnae = ''
+            objetoDoCnae = idDoCnae + ': ' + descricaoDoCnae + '/ Observações deste CNAE: ' + observacoesDoCnae
+            this.cnaes.push(objetoDoCnae)
+          }
+        })
+
+    },
+
+    addNovoAmbiente(){
+      this.novaEdificacao.edificacao.ambientes = JSON.stringify(this.novaEdificacao.edificacao.ambientes) + "Ambiente 4: Banheiro - Área de 5m²"
+      console.log("this.novaEdificacao.edificacao.ambientes é: " + JSON.stringify(this.novaEdificacao.edificacao))
     }
 
   }
