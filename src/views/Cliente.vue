@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div style="display: flex" v-if="showProjetoSelecionado">
+        <div style="display: flex" v-if="mostrarProjetoSelecionado">
           <div style="display: flex">
             <v-stepper-step step="3">
               <a @click="e1 = 3" style="color: black">Dados do Projeto</a>
@@ -54,7 +54,7 @@
           </div>
         </div>
 
-        <div style="display: flex" v-if="showProjetoSelecionado">
+        <div style="display: flex" v-if="mostrarProjetoSelecionado">
           <div style="display: flex">
             <v-stepper-step step="4">
               <a @click="e1 = 4" style="color: black">Quadro de Área</a>
@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div style="display: flex" v-if="showProjetoSelecionado">
+        <div style="display: flex" v-if="mostrarProjetoSelecionado">
           <div style="display: flex">
             <v-stepper-step step="5">
               <a @click="e1 = 5" style="color: black">Classificação</a>
@@ -116,7 +116,7 @@
             </v-row>
 
             <div class="text-center">
-              <v-dialog v-model="novoProjetoDialog" width="600">
+              <v-dialog v-model="caixaDeDialogoParaNovoProjeto" width="600">
                 <template v-slot:activator="{ on }">
                   <v-row justify="start" class="ml-4">
                     <v-btn color="success" class="mr-4" v-on="on">Novo Projeto</v-btn>
@@ -173,23 +173,74 @@
                       <td style="width: 20px">
                         <v-row justify="center" align="center">
                           <button>
-                            <v-icon style="margin-left: 0px" @click="removerProjeto(projeto)">{{ projeto.icon2 }}</v-icon>
+                            <v-icon style="margin-left: 0px" @click="dialogDoProjetoSelecionadoParaDeletar = true">{{ projeto.icon2 }}</v-icon>
                           </button>
                         </v-row>
                       </td>
                     </tr>
+
+                    <div class="text-center">
+                      <v-dialog v-model="dialogDoProjetoSelecionadoParaDeletar" width="500">
+
+                        <v-card>
+                          <v-card-title class="headline grey lighten-2" primary-title>
+                            Confirmação de exclusão
+                          </v-card-title>
+
+                          <v-card-text>
+                            Você tem certeza que deseja deletar o projeto?
+                          </v-card-text>
+
+                          <v-divider></v-divider>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="error" text @click="dialogDoProjetoSelecionadoParaDeletar = false">
+                              Não
+                            </v-btn>
+                            <v-btn color="success" text @click="removerProjeto(projeto)">
+                              Sim
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </div>
+
                   </tbody>
                 </template>
               </v-simple-table>
             </v-card-text>
           </v-card>
 
+          <v-snackbar v-model="snackbarDoProjetoSelecionadoParaEditar">
+            Projeto selecionado para edição!
+            <v-btn color="pink" text @click="snackbarDoProjetoSelecionadoParaEditar = false">
+              Fechar
+            </v-btn>
+          </v-snackbar>
+
+          <v-snackbar v-model="snackbarDoNovoProjeto">
+            Novo projeto salvo com sucesso!
+            <v-btn color="pink" text @click="snackbarDoNovoProjeto = false">
+              Fechar
+            </v-btn>
+          </v-snackbar>
+
+          <v-snackbar v-model="snackbarDoProjetoSelecionadoJaDeletado">
+            Projeto removido com sucesso!
+            <v-btn color="pink" text @click="snackbarDoProjetoSelecionadoJaDeletado = false">
+              Fechar
+            </v-btn>
+          </v-snackbar>
+
+          
+
           <v-row justify="center">
             <v-btn color="error" class="ml-4" @click="e1 = 1">
               <v-icon>navigate_before</v-icon>Voltar
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="success" class="mr-4" @click="e1 = 3" v-if="showProjetoSelecionado">
+            <v-btn color="success" class="mr-4" @click="e1 = 3" v-if="mostrarProjetoSelecionado">
               Avançar
               <v-icon>navigate_next</v-icon>
             </v-btn>
@@ -200,7 +251,7 @@
         <!--  -->
         <!--  -->
         <!-- Tab 3: Dados do projeto selecionado -->
-        <v-stepper-content step="3" class="conteudo" v-if="showProjetoSelecionado">
+        <v-stepper-content step="3" class="conteudo" v-if="mostrarProjetoSelecionado">
           <v-card class="mb-12">
             <v-row justify="center" align="center">
               <v-stepper-step step="3">Dados do Projeto selecionado</v-stepper-step>
@@ -304,7 +355,7 @@
         <!--  -->
         <!--  -->
         <!-- Tab 4: Dados do Quadro de Áreas do Projeto Selecionado, se nenhum projeto está selecionado, não deve aparecer -->
-        <v-stepper-content v-if="showProjetoSelecionado" step="4" class="conteudo">
+        <v-stepper-content v-if="mostrarProjetoSelecionado" step="4" class="conteudo">
           <v-row justify="center" align="center">
             <v-stepper-step step="4">Quadro de Área</v-stepper-step>
             <v-spacer></v-spacer>
@@ -382,7 +433,7 @@
 
 
         <!-- Tab 5: Dados da Classificação do Projeto Selecionado, se nenhum projeto está selecionado, não deve aparecer -->
-        <v-stepper-content v-if="showProjetoSelecionado" step="5" class="conteudo">
+        <v-stepper-content v-if="mostrarProjetoSelecionado" step="5" class="conteudo">
           <v-row justify="center" align="center">
             <v-stepper-step step="5">Classificação</v-stepper-step>
             <v-spacer></v-spacer>
@@ -476,45 +527,13 @@ import HTTPcnaeConexion from "@/Utils/HTTPcnaeConexion";
 export default {
   data: () => ({
     // Dados Globais
-    showProjetoSelecionado: false,
+    mostrarProjetoSelecionado: false,
     e1: 0,
     
-    projetoSelecionadoParaEdicao: {
-      pessoaFisica: {
-        "nome": "Eduardo Aparecido Dias Cardoso",
-        "email": "cardosodiaseduardo@gmail.com",
-        "cpf": "044.406.671-39",
-        "telefonePessoal": "(67)991704717",
-      },
-      
-      pessoaJuridica: {
-        "razaoSocial": "Castro Construtora e Engenharia - ME",
-        "nomeFantasia": "CCE Construtora e Engenharia",
-        "emailInstitucional": "ccedson@gmail.com",
-        "telefoneEmpresa": "(67)3321-1014",
-        "nomeResponsavel": "Edson Fernandes de Castro",
-        "cpfResponsavel": "044.406.671-39",
-      },
+    projetoSelecionadoParaEdicao: {},
 
-      edificacao: {
-        "cep": "79.037-910",
-        "rua": "Av. Afonso Pena",
-        "numero": "2297",
-        "bairro": "Centro",
-        "municipio": "Campo Grande",
-        "estado": "MS",
-      },
-
-      dadosDaEdificacao: {
-        "areaDoTerreno": "350m²",
-        "areaConstruida": "250m²",
-        "areaAnalisada": "100m²",
-        "alturaDescendente": "2 metros",
-        "alturaEdificacao": "4 metros",
-        "numeroPavimentos": "4",
-      },
-    
-      quadroDeAreas: {
+    //como o quadro de areas deve ser salvo
+    quadroDeAreas: {
         "edificacao1": {
           "nome": "Escritório",
           "area": "25m²",
@@ -533,18 +552,21 @@ export default {
           }
         }
       
-      }
-
-    },
+      },
 
     alertaProjetoNaoSalvo: false,
     msgErroSalvandoProjeto: "",
     // Adicionando novo projeto na tab da listagem dos projetos
-    novoProjetoDialog: false,
+    caixaDeDialogoParaNovoProjeto: false,
     novoProjetoNome: "",
     novoProjetoDescricao: "",
     projetoSelecionado: false,
     projetos: [],
+    snackbarDoProjetoSelecionadoParaEditar: false,
+    fdsi: "",
+    dialogDoProjetoSelecionadoParaDeletar: false,
+    snackbarDoProjetoSelecionadoJaDeletado: false,
+    snackbarDoNovoProjeto: false,
 
     //Adicionando nova edificação na tab das listagens de edificações
     edificacoes: [],
@@ -580,7 +602,7 @@ export default {
 
     //Métodos de ativar as tabs para edição do projeto
     ativar() {
-      this.showProjetoSelecionado = !this.showProjetoSelecionado;
+      this.mostrarProjetoSelecionado = !this.mostrarProjetoSelecionado;
     },
 
     //Método para verificar se o usuário tem projetos cadastrados e exibe-os na listagem
@@ -611,20 +633,92 @@ export default {
       let novoProjeto = {};
 
       if (this.novoProjetoNome === "" || this.novoProjetoDescricao === "") {
-        this.msgErroSalvandoProjeto =
-          "Por gentileza, preencha os dados do nome e da descrição do projeto para salvar e começar a editar o projeto!";
+        this.msgErroSalvandoProjeto = "Por gentileza, preencha os dados do nome e da descrição do projeto para salvar e começar a editar o projeto!";
         this.alertaProjetoNaoSalvo = true;
       } else {
+        
         //Setando os itens do objeto projeto
         novoProjeto.usuario = localStorage.getItem("_id");
         novoProjeto.nome = this.novoProjetoNome;
         novoProjeto.descricao = this.novoProjetoDescricao;
-        novoProjeto.icon1 = "edit";
-        novoProjeto.icon2 = "delete";
+
+        //setando os dados da pessoaFisica do objeto projeto
+        let pessoaFisica = {}
+        let nome = ''
+        let email = ''
+        let cpf = ''
+        let telefonePessoal = ''
+        
+        pessoaFisica.nome = nome
+        pessoaFisica.email = email
+        pessoaFisica.cpf = cpf
+        pessoaFisica.telefonePessoal = telefonePessoal
+
+        novoProjeto.pessoaFisica = pessoaFisica
+
+        //setando os dados da pessoaJuridica do objeto projeto
+        let pessoaJuridica = {}
+        let cnpj = ''
+        let razaoSocial = ''
+        let nomeFantasia = ''
+        let emailInstitucional = ''
+        let telefoneEmpresa = ''
+        let nomeResponsavel = ''
+        let cpfResponsavel = ''
+        
+        pessoaJuridica.cnpj = cnpj
+        pessoaJuridica.razaoSocial = razaoSocial
+        pessoaJuridica.nomeFantasia = nomeFantasia
+        pessoaJuridica.emailInstitucional = emailInstitucional
+        pessoaJuridica.telefoneEmpresa = telefoneEmpresa
+        pessoaJuridica.nomeResponsavel = nomeResponsavel
+        pessoaJuridica.cpfResponsavel = cpfResponsavel
+
+        novoProjeto.pessoaJuridica = pessoaJuridica
+
+        //setando os dados da edificacao do objeto projeto
+        let edificacao = {}
+        let cep = ''
+        let rua = ''
+        let numero = ''
+        let bairro = ''
+        let municipio = ''
+        let estado = ''
+        
+        edificacao.cep = cep
+        edificacao.rua = rua
+        edificacao.numero = numero
+        edificacao.bairro = bairro
+        edificacao.municipio = municipio
+        edificacao.estado = estado
+
+        novoProjeto.edificacao = edificacao
+
+        //setando os dados da edificacao de metragem do objeto projeto
+        let dadosDaEdificacao = {}
+        let areaDoTerreno = ''
+        let areaConstruida = ''
+        let areaAnalisada = ''
+        let alturaDescendente = ''
+        let alturaEdificacao = ''
+        let numeroPavimentos = ''
+
+        dadosDaEdificacao.areaDoTerreno = areaDoTerreno
+        dadosDaEdificacao.areaConstruida = areaConstruida
+        dadosDaEdificacao.areaAnalisada = areaAnalisada
+        dadosDaEdificacao.alturaDescendente = alturaDescendente
+        dadosDaEdificacao.alturaEdificacao = alturaEdificacao
+        dadosDaEdificacao.numeroPavimentos = numeroPavimentos
+
+        novoProjeto.dadosDaEdificacao = dadosDaEdificacao
 
         HTTPutils.salvarProjeto(novoProjeto).then(projetoRetornado => {
           if (projetoRetornado != "Erro interno, não foi possível adicionar o projeto, tente novamente ou contate o administrador do site" && projetoRetornado != {} && projetoRetornado != []){
             // Projeto salvo com sucesso
+            this.snackbarDoNovoProjeto = true
+            this.projetoSelecionadoParaEdicao = projetoRetornado
+            this.buscarProjetosDoUsuarioPeloId()
+
           } else {
             // "Projeto não foi salvo!
             (this.msgErroSalvandoProjeto =
@@ -633,14 +727,14 @@ export default {
           }
         });
 
-        this.novoProjetoDialog = false;
+        this.caixaDeDialogoParaNovoProjeto = false;
         this.novoProjetoDescricao = "";
         this.ativar();
-        buscarProjetosDoUsuarioPeloId();
       }
     },
 
     removerProjeto(projetoAserRemovido){
+      
       HTTPutils.removerProjeto(projetoAserRemovido)
         .then( resultado => {
           if(resultado != "Erro ao deletar projeto!" && resultado != undefined && resultado != null && resultado != {} && resultado != []){
@@ -648,6 +742,8 @@ export default {
             const lista = this.projetos.filter(projeto => projeto._id !== resultado._id);
 
             this.projetos = [...lista]
+            this.dialogDoProjetoSelecionadoParaDeletar = false
+            this.snackbarDoProjetoSelecionadoJaDeletado = true
             return
 
           } else {
@@ -655,6 +751,9 @@ export default {
             return
           }
         })
+
+      
+
     },
 
     noQuadroDeAreasAddEdificacao(){
@@ -672,8 +771,23 @@ export default {
     },
 
     buscarTodosOsDadosDoProjetoSelecionado(projetoAserEditado){
+      
+      HTTPutils.buscarProjetoEspecifico(projetoAserEditado)
+        .then ( projetoRetornado => {
+          if(projetoRetornado !== "Erro ao buscar o projeto específico!" || projetoRetornado !== {} || projetoRetornado !== []){
+            //Projeto retornou
+            this.projetoSelecionadoParaEdicao = projetoRetornado
+          } else {
+            console.log("Erro ao buscar projeto específico!")
+          }
+        })
+
+      if(this.mostrarProjetoSelecionado === false){
+        this.snackbarDoProjetoSelecionadoParaEditar = false
+      } else {
+        this.snackbarDoProjetoSelecionadoParaEditar = true
+      }
       this.ativar();
-      // this.projetoSelecionadoParaEdicao = projetoAserEditado
     },
 
     trazerDadosDosCnaes(){

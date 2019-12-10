@@ -7,9 +7,7 @@ export default{
 
     // Cadastrar novo usuário
     async salvarUsuario(usuarioNovo) {
-
         return axios.post(API_URL + 'usuarios', usuarioNovo).then(response => response.data);
-
     },
 
     async autenticar(usuarioLogando){
@@ -34,6 +32,11 @@ export default{
     //Deletar um Projeto específico
     async removerProjeto(projetoAserRemovido){
         return axios.post(API_URL + "deleteprojeto", projetoAserRemovido).then(response => response.data)
+    },
+
+    //Buscar um projeto específico
+    async buscarProjetoEspecifico(idDoProjetoAserBuscado){
+        return axios.post(API_URL + "projetoid", idDoProjetoAserBuscado).then(response => response.data)
     }
 
 };
