@@ -273,10 +273,10 @@
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Pessoa Física</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-form ref="form">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.nome" label="Nome" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.email" label="E-mail" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.cpf" label="CPF" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaFisica.telefonePessoal" label="Telefone celular" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaFisica.nome" label="Nome" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaFisica.email" label="E-mail" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaFisica.cpf" label="CPF" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaFisica.telefonePessoal" label="Telefone celular" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -286,13 +286,13 @@
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Pessoa Jurídica</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-form ref="form">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.cnpj" label="CNPJ" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.razaoSocial" label="Razão Social" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeFantasia" label="Nome Fantasia" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.emailInstitucional" label="E-mail da Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.telefoneEmpresa" label="Telefone da Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeResponsavel" label="Nome Completo do Responsável pela Empresa" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.pessoaJuridica.cpfResponsavel" label="CPF do Responsável pela Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.cnpj" label="CNPJ" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.razaoSocial" label="Razão Social" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.nomeFantasia" label="Nome Fantasia" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.emailInstitucional" label="E-mail da Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.telefoneEmpresa" label="Telefone da Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.nomeResponsavel" label="Nome Completo do Responsável pela Empresa" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.pessoaJuridica.cpfResponsavel" label="CPF do Responsável pela Empresa" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -308,12 +308,12 @@
                   <v-expansion-panel-header style="color: black" class="ml-1 pa-4">Endereço</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-form ref="form">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.cep" label="CEP" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.rua" label="Rua" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.numero" label="Número" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.bairro" label="Bairro" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.municipio" label="Município" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.edificacao.estado" label="Estado" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.cep" label="CEP" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.rua" label="Rua" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.numero" label="Número" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.bairro" label="Bairro" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.municipio" label="Município" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.edificacao.estado" label="Estado" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -324,18 +324,18 @@
 
                   <v-expansion-panel-content>
                     <v-form ref="form">
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaDoTerreno" label="Área do terreno (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaConstruida" label="Área construída (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaAnalisada" label="Área a ser analisada (m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaDescendente" label="Altura descendente (Entre Pisos, em m²)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaEdificacao" label="Altura total da edificação (m)" required></v-text-field>
-                      <v-text-field class="paddingFoward" v-bind:value="this.projetoSelecionadoParaEdicao.dadosDaEdificacao.numeroPavimentos" label="Número de pavimentos" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.areaDoTerreno" label="Área do terreno (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.areaConstruida" label="Área construída (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.areaAnalisada" label="Área a ser analisada (m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaDescendente" label="Altura descendente (Entre Pisos, em m²)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaEdificacao" label="Altura total da edificação (m)" required></v-text-field>
+                      <v-text-field class="paddingFoward" v-model="projetoSelecionadoParaEdicao.dadosDaEdificacao.numeroPavimentos" label="Número de pavimentos" required></v-text-field>
                     </v-form>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
 
-              <v-btn color="success" class="ma-4">Salvar Dados</v-btn>
+              <v-btn color="success" class="ma-4" @click="buscarTodosOsDadosDoProjetoSelecionado(botaoDeEditarOsDadosDoProjeto)">Salvar Dados</v-btn>
             </v-card-text>
           </v-card>
 
@@ -530,7 +530,42 @@ export default {
     mostrarProjetoSelecionado: false,
     e1: 0,
     
-    projetoSelecionadoParaEdicao: {},
+    projetoSelecionadoParaEdicao: {
+      "pessoaJuridica": {
+        "cnpj": "",
+        "razaoSocial": "",
+        "nomeFantasia": "",
+        "emailInstitucional": "",
+        "telefoneEmpresa": "",
+        "nomeResponsavel": "",
+        "cpfResponsavel": ""
+      },
+      
+      "pessoaFisica": {
+        "nome": "",
+        "email": "",
+        "cpf": "",
+        "telefonePessoal": ""
+      },
+
+      "edificacao": {
+        "cep": "",
+        "rua": "",
+        "numero": "",
+        "bairro": "",
+        "municipio": "",
+        "estado": ""
+      },
+
+      "dadosDaEdificacao": {
+        "areaDoTerreno": "",
+        "areaConstruida": "",
+        "areaAnalisada": "",
+        "alturaDescendente": "",
+        "alturaEdificacao": "",
+        "numeroPavimentos": ""
+      }
+    },
 
     //como o quadro de areas deve ser salvo
     quadroDeAreas: {
@@ -567,7 +602,8 @@ export default {
     dialogDoProjetoSelecionadoParaDeletar: false,
     snackbarDoProjetoSelecionadoJaDeletado: false,
     snackbarDoNovoProjeto: false,
-
+    botaoDeEditarOsDadosDoProjeto: "editar os dados do projeto",
+    
     //Adicionando nova edificação na tab das listagens de edificações
     edificacoes: [],
     novaEdificacao: {
@@ -721,9 +757,8 @@ export default {
 
           } else {
             // "Projeto não foi salvo!
-            (this.msgErroSalvandoProjeto =
-              "Projeto não foi salvo por algum motivo. Por gentileza, contate o admin do site para informar!"),
-              (this.alertaProjetoNaoSalvo = true);
+            this.msgErroSalvandoProjeto = "Projeto não foi salvo por algum motivo. Por gentileza, contate o admin do site para informar!"
+            this.alertaProjetoNaoSalvo = true;
           }
         });
 
@@ -731,6 +766,56 @@ export default {
         this.novoProjetoDescricao = "";
         this.ativar();
       }
+    },
+
+    salvarEdicaoDosDadosDoProjeto(){
+      let projetoAserEditadoOsDadosComIdDoProjeto = {}
+
+      projetoAserEditadoOsDadosComIdDoProjeto._id = localStorage.getItem("projetoId")
+
+      let pessoaFisica = {}
+      pessoaFisica.nome = this.projetoSelecionadoParaEdicao.pessoaFisica.nome
+      pessoaFisica.email = this.projetoSelecionadoParaEdicao.pessoaFisica.email
+      pessoaFisica.cpf = this.projetoSelecionadoParaEdicao.pessoaFisica.cpf
+      pessoaFisica.telefonePessoal = this.projetoSelecionadoParaEdicao.pessoaFisica.telefonePessoal
+
+      projetoAserEditadoOsDadosComIdDoProjeto.pessoaFisica = pessoaFisica
+      
+      let pessoaJuridica = {}
+      pessoaJuridica.cnpj = this.projetoSelecionadoParaEdicao.pessoaJuridica.cnpj
+      pessoaJuridica.razaoSocial = this.projetoSelecionadoParaEdicao.pessoaJuridica.razaoSocial
+      pessoaJuridica.nomeFantasia = this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeFantasia
+      pessoaJuridica.emailInstitucional = this.projetoSelecionadoParaEdicao.pessoaJuridica.emailInstitucional
+      pessoaJuridica.telefoneEmpresa = this.projetoSelecionadoParaEdicao.pessoaJuridica.telefoneEmpresa
+      pessoaJuridica.nomeResponsavel = this.projetoSelecionadoParaEdicao.pessoaJuridica.nomeResponsavel
+      pessoaJuridica.cpfResponsavel = this.projetoSelecionadoParaEdicao.pessoaJuridica.cpfResponsavel
+
+      projetoAserEditadoOsDadosComIdDoProjeto.pessoaJuridica = pessoaJuridica
+
+      let edificacao = {}
+      edificacao.cep = this.projetoSelecionadoParaEdicao.edificacao.cep
+      edificacao.rua = this.projetoSelecionadoParaEdicao.edificacao.rua
+      edificacao.numero = this.projetoSelecionadoParaEdicao.edificacao.numero
+      edificacao.bairro = this.projetoSelecionadoParaEdicao.edificacao.bairro
+      edificacao.municipio = this.projetoSelecionadoParaEdicao.edificacao.municipio
+      edificacao.estado = this.projetoSelecionadoParaEdicao.edificacao.estado
+
+      projetoAserEditadoOsDadosComIdDoProjeto.edificacao = edificacao
+
+      let dadosDaEdificacao = {}
+      dadosDaEdificacao.areaDoTerreno = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaDoTerreno
+      dadosDaEdificacao.areaConstruida = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaConstruida
+      dadosDaEdificacao.areaAnalisada = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.areaAnalisada
+      dadosDaEdificacao.alturaDescendente = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaDescendente
+      dadosDaEdificacao.alturaEdificacao = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.alturaEdificacao
+      dadosDaEdificacao.numeroPavimentos = this.projetoSelecionadoParaEdicao.dadosDaEdificacao.numeroPavimentos
+
+      projetoAserEditadoOsDadosComIdDoProjeto.dadosDaEdificacao = dadosDaEdificacao
+
+      HTTPutils.editarDadosDoProjeto(projetoAserEditadoOsDadosComIdDoProjeto).then( avisoDoProjetoRetornadoJaEditado => {
+        console.log("Projeto editado com sucesso!")
+      })
+
     },
 
     removerProjeto(projetoAserRemovido){
@@ -772,22 +857,31 @@ export default {
 
     buscarTodosOsDadosDoProjetoSelecionado(projetoAserEditado){
       
-      HTTPutils.buscarProjetoEspecifico(projetoAserEditado)
-        .then ( projetoRetornado => {
-          if(projetoRetornado !== "Erro ao buscar o projeto específico!" || projetoRetornado !== {} || projetoRetornado !== []){
-            //Projeto retornou
-            this.projetoSelecionadoParaEdicao = projetoRetornado
-          } else {
-            console.log("Erro ao buscar projeto específico!")
-          }
-        })
+      if(projetoAserEditado !== {} && projetoAserEditado !== "editar os dados do projeto"){
+        localStorage.setItem("projetoId", projetoAserEditado._id)
+  
+        HTTPutils.buscarProjetoEspecifico(projetoAserEditado)
+          .then ( projetoRetornadoDaApi => {
+            if(projetoRetornadoDaApi !== "Erro ao buscar o projeto específico!" || projetoRetornadoDaApi !== {} || projetoRetornadoDaApi !== []){
+              //Projeto retornou
+              this.projetoSelecionadoParaEdicao = projetoRetornadoDaApi
+              if(this.mostrarProjetoSelecionado === false){
+                this.snackbarDoProjetoSelecionadoParaEditar = true
+              } else {
+                this.snackbarDoProjetoSelecionadoParaEditar = false
+              }
+              this.ativar();
+  
+            } else {
+              console.log("Erro ao buscar projeto específico!")
+            }
+          })
 
-      if(this.mostrarProjetoSelecionado === false){
-        this.snackbarDoProjetoSelecionadoParaEditar = false
       } else {
-        this.snackbarDoProjetoSelecionadoParaEditar = true
+        this.salvarEdicaoDosDadosDoProjeto()
       }
-      this.ativar();
+      
+
     },
 
     trazerDadosDosCnaes(){

@@ -37,6 +37,13 @@ export default{
     //Buscar um projeto específico
     async buscarProjetoEspecifico(idDoProjetoAserBuscado){
         return axios.post(API_URL + "projetoid", idDoProjetoAserBuscado).then(response => response.data)
+    },
+
+    //editar Dados do Projeto
+    async editarDadosDoProjeto(dadosDoProjetoEditadoComIdDoProjeto){
+        return axios.put(API_URL + "projetoid", dadosDoProjetoEditadoComIdDoProjeto).then(response => response.data)
     }
+
+
 
 };
