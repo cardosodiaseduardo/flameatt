@@ -18,6 +18,10 @@ export default{
         return axios.post(API_URL + "localstorageemailautenticacao", usuarioNoLocalStorage).then(response => response.data);
     },
 
+    async buscarUsuarioEspecificoPeloId(iDdoUsuario){
+        return axios.get(API_URL + 'usuarioid', iDdoUsuario).then(response => response.data)
+    },
+
 
     //Cadastrar novo projeto
     async salvarProjeto(usuarioMaisProjeto){
@@ -40,7 +44,7 @@ export default{
     },
 
     //editar Dados do Projeto
-    async editarDadosDoProjeto(dadosDoProjetoEditadoComIdDoProjeto){
+    async editarOProjeto(dadosDoProjetoEditadoComIdDoProjeto){
         return axios.put(API_URL + "projetoid", dadosDoProjetoEditadoComIdDoProjeto).then(response => response.data)
     }
 

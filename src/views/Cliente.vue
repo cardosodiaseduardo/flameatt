@@ -174,37 +174,37 @@
                         <v-row justify="center" align="center">
                           <button>
                             <v-icon style="margin-left: 0px" @click="dialogDoProjetoSelecionadoParaDeletar = true">{{ projeto.icon2 }}</v-icon>
+                            <div class="text-center">
+                              <v-dialog v-model="dialogDoProjetoSelecionadoParaDeletar" width="500">
+
+                                <v-card>
+                                  <v-card-title class="headline grey lighten-2" primary-title>
+                                    Confirmação de exclusão
+                                  </v-card-title>
+
+                                  <v-card-text>
+                                    Você tem certeza que deseja deletar o projeto?
+                                  </v-card-text>
+
+                                  <v-divider></v-divider>
+
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="error" text @click="dialogDoProjetoSelecionadoParaDeletar = false">
+                                      Não
+                                    </v-btn>
+                                    <v-btn color="success" text @click="removerProjeto(projeto)">
+                                      Sim
+                                    </v-btn>
+                                  </v-card-actions>
+                                </v-card>
+                              </v-dialog>
+                            </div>
                           </button>
                         </v-row>
                       </td>
                     </tr>
 
-                    <div class="text-center">
-                      <v-dialog v-model="dialogDoProjetoSelecionadoParaDeletar" width="500">
-
-                        <v-card>
-                          <v-card-title class="headline grey lighten-2" primary-title>
-                            Confirmação de exclusão
-                          </v-card-title>
-
-                          <v-card-text>
-                            Você tem certeza que deseja deletar o projeto?
-                          </v-card-text>
-
-                          <v-divider></v-divider>
-
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="error" text @click="dialogDoProjetoSelecionadoParaDeletar = false">
-                              Não
-                            </v-btn>
-                            <v-btn color="success" text @click="removerProjeto(projeto)">
-                              Sim
-                            </v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </div>
 
                   </tbody>
                 </template>
@@ -354,7 +354,7 @@
         <!--  -->
         <!--  -->
         <!--  -->
-        <!-- Tab 4: Dados do Quadro de Áreas do Projeto Selecionado, se nenhum projeto está selecionado, não deve aparecer -->
+        <!-- Tab 4: Quadro de Áreas do Projeto Selecionado, se nenhum projeto está selecionado, não deve aparecer -->
         <v-stepper-content v-if="mostrarProjetoSelecionado" step="4" class="conteudo">
           <v-row justify="center" align="center">
             <v-stepper-step step="4">Quadro de Área</v-stepper-step>
@@ -367,18 +367,15 @@
             </v-btn>
             <v-card v-if="caixaDeExpansaoDoAddEdificacao" class="pb-4" height="100%">
               <v-card-text>
-                <v-text-field label="Nome" placeholder="Ex.: Lounge"></v-text-field>
-                <v-text-field label="Área Total (em m²)" placeholder="Ex.: 55"></v-text-field>
-                <div v-for="item in novaEdificacao.edificacao" v-bind:key="item.nome">
-                  <v-text-field label="Ambientes" placeholder="Ex.: Bar Gourmet - 10m²" v-model="item.ambientes"></v-text-field>
-                </div>
-                <div class="mb-4">
-                  <v-btn small text color="success" @click="addNovoAmbiente">+ 1 ambiente</v-btn>
-                </div>
+                <v-text-field label="Nome" placeholder="Ex.: Lounge" v-model="edificacaoNova"></v-text-field>
+                <v-text-field label="Área Total (em m²)" placeholder="Ex.: 100" v-model="areaTotalDaNovaEdificacao"></v-text-field>
+                <v-text-field label="Ambiente 1" placeholder="Ex.: Bar - 65m²" v-model="ambiente1DaNovaEdificacao"></v-text-field>
+                <v-text-field label="Ambiente 2" placeholder="Ex.: Cozinha - 25m²" v-model="ambiente2DaNovaEdificacao"></v-text-field>
+                <v-text-field label="Ambiente 3" placeholder="Ex.: Administrativo - 10m²" v-model="ambiente3DaNovaEdificacao"></v-text-field>
               </v-card-text>
               <v-divider></v-divider>
               <v-card-actions class="mt-4">
-                <v-btn outlined color="success" @click="noQuadroDeAreasAddEdificacao()">
+                <v-btn outlined color="success" @click="salvarNovaEdificacaoNoQuadroDeAreas()">
                   Salvar
                 </v-btn>
               </v-card-actions>                
@@ -396,16 +393,19 @@
                   <template>
                     <tbody>
                       <tr>
+                        <!-- O método comentado abaixo é o que lê os dados de um objeto no Data de forma correta, está salvo -->
                         <v-expansion-panels>
-                          <v-expansion-panel v-for="item in projetoSelecionadoParaEdicao.quadroDeAreas" v-bind:key="item.nome">
-                            <v-expansion-panel-header> <h3> {{ item.nome }} </h3> </v-expansion-panel-header>
+                          <v-expansion-panel v-for="item in quadroDeAreas" :key="item.edificacaoNova">
+                            <v-expansion-panel-header> <h3> {{ item.edificacaoNova }} </h3> </v-expansion-panel-header>
                             <v-expansion-panel-content>
                               <h5>Área Total</h5>
-                              <span>{{ item.area }}</span>
+                              <span>{{ item.areaTotalDaNovaEdificacao }}</span>
                               <h5>Ambientes internos</h5>
-                              <li v-for="(valor, chave) in item.ambientes" v-bind:key="chave.ambiente">
-                                {{ chave }}: {{ valor }}
-                              </li>
+                              <div>
+                                <span>{{ item.ambiente1DaNovaEdificacao }} </span><br>
+                                <span>{{ item.ambiente2DaNovaEdificacao }} </span><br>
+                                <span>{{ item.ambiente3DaNovaEdificacao }} </span>
+                              </div>
                             </v-expansion-panel-content>
                           </v-expansion-panel>
                         </v-expansion-panels>
@@ -564,30 +564,53 @@ export default {
         "alturaDescendente": "",
         "alturaEdificacao": "",
         "numeroPavimentos": ""
-      }
-    },
+      },
 
-    //como o quadro de areas deve ser salvo
-    quadroDeAreas: {
-        "edificacao1": {
+      quadroDeAreas: {}
+
+    },
+    
+    quadroDeAreas: [
+       {
           "nome": "Escritório",
           "area": "25m²",
           "ambientes": {
-            "Ambiente 1": "Sala de Reunião - Área de 10m²",
-            "Ambiente 2": "Sala de espera - Área de 5m²",
-            "Ambiente 3": "Escritório - Área de 10m²"
+            "Sala de Reunião": "Área de 10m²",
+            "Sala de espera": "Área de 5m²",
+            "Escritório": "Área de 10m²"
           }
         },
-        "edificacao2": {
+        {
           "nome": "Auditório",
           "area": "50m²",
           "ambientes": {
-            "Ambiente 1": "Sala do Maquinário - Área de 5m²",
-            "Ambiente 2": "Auditório - Área de 45m²"
+            "Sala do Maquinário": "Área de 5m²",
+            "Auditório": "Área de 45m²"
           }
         }
+    ],
+
+    //como o quadro de areas deve ser salvo
+    // quadroDeAreas: [
+    //     {
+    //       "nome": "Escritório",
+    //       "area": "25m²",
+    //       "ambientes": {
+    //         "Ambiente 1": "Sala de Reunião - Área de 10m²",
+    //         "Ambiente 2": "Sala de espera - Área de 5m²",
+    //         "Ambiente 3": "Escritório - Área de 10m²"
+    //       }
+    //     },
+    //     {
+    //       "nome": "Auditório",
+    //       "area": "50m²",
+    //       "ambientes": {
+    //         "Ambiente 1": "Sala do Maquinário - Área de 5m²",
+    //         "Ambiente 2": "Auditório - Área de 45m²"
+    //       }
+    //     }
       
-      },
+    //   ],
 
     alertaProjetoNaoSalvo: false,
     msgErroSalvandoProjeto: "",
@@ -603,21 +626,13 @@ export default {
     snackbarDoProjetoSelecionadoJaDeletado: false,
     snackbarDoNovoProjeto: false,
     botaoDeEditarOsDadosDoProjeto: "editar os dados do projeto",
-    
-    //Adicionando nova edificação na tab das listagens de edificações
-    edificacoes: [],
-    novaEdificacao: {
-      "edificacao": {
-        "nome": "Estudio",
-        "area": "25m²",
-        "ambientes": {
-          "Ambiente 1": "Estudio de gravação - 20m²",
-          "Ambiente 2": "Banheiro - Área de 5m²",
-        }
-      }
-    },
 
-    dialog: false,
+    edificacaoNova: "",
+    areaTotalDaNovaEdificacao: "",
+    ambiente1DaNovaEdificacao: "",
+    ambiente2DaNovaEdificacao: "",
+    ambiente3DaNovaEdificacao: "",
+
     caixaDeExpansaoDoAddEdificacao: false,
 
     //Array para integração com API do IBGE dos CNAEs
@@ -812,16 +827,17 @@ export default {
 
       projetoAserEditadoOsDadosComIdDoProjeto.dadosDaEdificacao = dadosDaEdificacao
 
-      HTTPutils.editarDadosDoProjeto(projetoAserEditadoOsDadosComIdDoProjeto).then( avisoDoProjetoRetornadoJaEditado => {
+      HTTPutils.editarOProjeto(projetoAserEditadoOsDadosComIdDoProjeto).then( avisoDoProjetoRetornadoJaEditado => {
         console.log("Projeto editado com sucesso!")
       })
 
     },
 
     removerProjeto(projetoAserRemovido){
-      
+      console.log(JSON.stringify(projetoAserRemovido))
       HTTPutils.removerProjeto(projetoAserRemovido)
         .then( resultado => {
+          
           if(resultado != "Erro ao deletar projeto!" && resultado != undefined && resultado != null && resultado != {} && resultado != []){
             //Projeto deletado com sucesso
             const lista = this.projetos.filter(projeto => projeto._id !== resultado._id);
@@ -841,18 +857,32 @@ export default {
 
     },
 
-    noQuadroDeAreasAddEdificacao(){
-      let novaEdificacao = {
-        "nome": "Lounge",
-        "area": "Área de 30m²",
-        "ambientes": {
-          "Ambiente 1": "Hidromassagem - Área de 5m²",
-          "Ambiente 2": "Piscina - Área de 15m²",
-          "Ambiente 3": "frigobar - Área de 10m²"
-        }
-      }
-      this.edificacoes.push(novaEdificacao)
-      this.dialog = false
+    salvarNovaEdificacaoNoQuadroDeAreas(){
+      
+      let objetoAserEditadoOQuadroDeAreas = {}
+      let novaEdificacaoNoQuadroDeAreas = {}
+
+      objetoAserEditadoOQuadroDeAreas._id = localStorage.getItem("projetoId")
+
+      novaEdificacaoNoQuadroDeAreas.edificacaoNova = this.edificacaoNova
+      novaEdificacaoNoQuadroDeAreas.areaTotalDaNovaEdificacao = this.areaTotalDaNovaEdificacao
+      novaEdificacaoNoQuadroDeAreas.ambiente1DaNovaEdificacao = this.ambiente1DaNovaEdificacao
+      novaEdificacaoNoQuadroDeAreas.ambiente2DaNovaEdificacao = this.ambiente2DaNovaEdificacao
+      novaEdificacaoNoQuadroDeAreas.ambiente3DaNovaEdificacao = this.ambiente3DaNovaEdificacao
+
+      objetoAserEditadoOQuadroDeAreas.quadroDeAreas = novaEdificacaoNoQuadroDeAreas
+      
+      let usuario = {}
+      usuario._id = localStorage.getItem("_id")
+      objetoAserEditadoOQuadroDeAreas.usuario = usuario
+
+      HTTPutils.editarOProjeto(objetoAserEditadoOQuadroDeAreas)
+        .then( objetoRetornadoDaApi => {
+          console.log(JSON.stringify(objetoRetornadoDaApi))
+        })
+
+      this.quadroDeAreas.push(novaEdificacaoNoQuadroDeAreas)
+
     },
 
     buscarTodosOsDadosDoProjetoSelecionado(projetoAserEditado){
@@ -865,6 +895,7 @@ export default {
             if(projetoRetornadoDaApi !== "Erro ao buscar o projeto específico!" || projetoRetornadoDaApi !== {} || projetoRetornadoDaApi !== []){
               //Projeto retornou
               this.projetoSelecionadoParaEdicao = projetoRetornadoDaApi
+              this.quadroDeAreas = projetoRetornadoDaApi.quadroDeAreas
               if(this.mostrarProjetoSelecionado === false){
                 this.snackbarDoProjetoSelecionadoParaEditar = true
               } else {
